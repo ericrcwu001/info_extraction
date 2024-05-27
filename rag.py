@@ -27,7 +27,7 @@ class RAG(object):
       loader = UnstructuredHTMLLoader(file_path)
     else:
       raise Exception('unknown file format!')
-    docs.append(loader.load())
+    docs.extend(loader.load())
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 500, chunk_overlap = 150)
     split_docs = text_splitter.split_documents(docs)
     embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
@@ -43,4 +43,4 @@ class RAG(object):
     return self.chain({'query': question})
 
 if __name__ == "__main__":
-  rag = RAG('CN117175037\ 固态电解质浆料、固态电解质膜、固态电池及用电装置.html')
+  rag = RAG('CN117175037 固态电解质浆料、固态电解质膜、固态电池及用电装置.html')
