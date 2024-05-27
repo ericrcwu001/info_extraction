@@ -44,3 +44,5 @@ class RAG(object):
 
 if __name__ == "__main__":
   rag = RAG('CN117175037 固态电解质浆料、固态电解质膜、固态电池及用电装置.html', locally = True)
+  res = rag.query("负极材料属于['碳基','硅基','锂金属或锂合金','氧化物','硫化物']中的哪一类？")
+  print(res)
