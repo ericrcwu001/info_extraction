@@ -38,9 +38,9 @@ class RAG(object):
     vectordb.persist()
     # create chain
     prompt = rag_template(tokenizer, False)
-    self.chain = RetrievalQA.from_chain_type(llm, retriever = db.as_retriever(), return_source_documents = True, chain_type_kwargs = {"prompt": prompt})
+    self.chain = RetrievalQA.from_chain_type(llm, retriever = vectordb.as_retriever(), return_source_documents = True, chain_type_kwargs = {"prompt": prompt})
   def query(self, question):
     return self.chain({'query': question})
 
 if __name__ == "__main__":
-  rag = RAG('CN117175037 固态电解质浆料、固态电解质膜、固态电池及用电装置.html')
+  rag = RAG('CN117175037 固态电解质浆料、固态电解质膜、固态电池及用电装置.html', locally = True)
