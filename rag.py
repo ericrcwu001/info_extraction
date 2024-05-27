@@ -45,4 +45,10 @@ class RAG(object):
 if __name__ == "__main__":
   rag = RAG('CN117175037 固态电解质浆料、固态电解质膜、固态电池及用电装置.html', locally = True)
   res = rag.query("负极材料属于['碳基','硅基','锂金属或锂合金','氧化物','硫化物']中的哪一类？")
-  print(res)
+  print('负极：',res['result'])
+  res = rag.query("正极材料属于['氧化钴锂','氧化镍锂','氧化锰锂','磷酸亚铁锂','硫化物']中的哪一类？")
+  print('正极：',res['result'])
+  res = rag.query("电解质属于['聚合物','氧化物','硫化物']中的哪一类？")
+  print('电解质：',res['result'])
+  res = rag.query("电池结构属于['wound cell','stacked cell']中的哪一类？")
+  print('电池结构：',res['result'])
