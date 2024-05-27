@@ -28,7 +28,7 @@ def main(unused_argv):
       structure, _ = rag.query("电池结构属于['wound cell','stacked cell']中的哪一类？如果电池结构不在这些类别中，给出具体电池结构名称。")
       company, _ = rag.query("公司名字是什么？")
       content.append({"专利":f,"公司":company,"正极材料":pos,"负极材料":neg,"电解质":electrolyte,"电池结构":structure})
-  with open(FLAGS.output_json, 'r', encoding = 'utf-8') as f:
+  with open(FLAGS.output_json, 'w', encoding = 'utf-8') as f:
     f.write(json.dumps(content, indent = 2, ensure_ascii = False))
 
 if __name__ == "__main__":
