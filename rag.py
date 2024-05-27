@@ -9,10 +9,13 @@ from langchain.vectorstores import Chroma
 from langchain_core.vectorstores import VectorStoreRetriever
 from langchain.chains import RetrievalQA
 from models import Llama3
+from prompts import rag_template
 
 class RAG(object):
   def __init__(self, pdf_path, db_dir = 'db', locally = False):
     if exists(db_dir): rmtree(db_dir)
+    # load llama3
+    tokenizer, llm = Llama3(locally)
     # load pdf to vectordb
     docs = list()
     loader = UnstructuredPDFLoader(pdf_path, mode = "single", strategy = "fast")
@@ -26,4 +29,8 @@ class RAG(object):
         persist_directory = db_dir)
     vectordb.persist()
     # create chain
-    self.chain = RetrievalQA.from_chain_type()
+    prompt = rag_template(tokenizer, False)
+    self.chain = RetrievalQA.from_chain_type(llm, retriever = db.as_retriever(), return_source_documents = True, chain_type_kwargs = {"prompt": prompt})
+  def query(self, question):
+    return self.chain({'query': question})
+
