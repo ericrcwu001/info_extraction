@@ -19,7 +19,8 @@ def main(unused_argv):
     elif res['电解质'].startswith('硫化物'): counts['sulfide'] += 1
     else: counts['others'] += 1
   fig, ax = plt.subplots()
-  ax.pie(list(counts.values()), labels = list(counts.keys()))
+  ax.pie(list(counts.values()), autopct='%1.1f%%')
+  plt.legend(loc = 'best', labels = list(counts.keys()))
   plt.savefig('output.png', format = "png")
   plt.show()
 
