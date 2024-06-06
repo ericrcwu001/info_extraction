@@ -26,8 +26,8 @@ def main(unused_argv):
       pos, _ = rag.query("正极材料属于['氧化钴锂','氧化镍锂','氧化锰锂','磷酸亚铁锂','硫化物']中的哪一类？如果材料不在这些类别中，给出具体材料名称。尽量精简答案。")
       electrolyte, _ = rag.query("电解质属于['聚合物','氧化物','硫化物']中的哪一类？只回答类别名称或者不知道。")
       structure, _ = rag.query("电池结构属于['wound cell','stacked cell']中的哪一类？如果电池结构不在这些类别中，给出具体电池结构名称。尽量精简答案")
-      date, _ = rag.query("专利的授权日期是什么？尽量精简答案。")
-      content.append({"专利":f,"授权日期":date,"正极材料":pos,"负极材料":neg,"电解质":electrolyte,"电池结构":structure})
+      date, _ = rag.query("专利的申请日期是什么？尽量精简答案。")
+      content.append({"专利":f,"申请日期":date,"正极材料":pos,"负极材料":neg,"电解质":electrolyte,"电池结构":structure})
   with open(FLAGS.output_json, 'w', encoding = 'utf-8') as f:
     f.write(json.dumps(content, indent = 2, ensure_ascii = False))
 
