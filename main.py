@@ -18,7 +18,7 @@ def add_options():
   flags.DEFINE_string('output_json', default = 'output.json', help = 'path to output json')
   flags.DEFINE_enum('model', default = 'llama3', enum_values = {'llama2', 'llama3', 'codellama'}, help = 'model name')
   flags.DEFINE_boolean('recursively', default = True, help = 'summary multiple chunks into one summary')
-  flags.DEFINE_string('instruction', default = 'Just focus on starting materials in the given examples, chemical formula of electrolyte and numerical data of conductivity', help = 'extra instruction')
+  flags.DEFINE_string('instruction', default = 'Just focus on materials used in the given examples, chemical formula of electrolyte and numerical data of conductivity', help = 'extra instruction')
 
 def main(unused_argv):
   content = list()
@@ -47,8 +47,8 @@ def main(unused_argv):
 
       print('2) RAG with the summarization')
       rag = RAG(tokenizer, llm, text, locally = FLAGS.locally)
-      formula, _ = rag.query("what is the chemical formula of the electrolyte in the example?")
-      materials, _ = rag.query("what are the starting materials used in the example?")
+      formula, _ = rag.query("what is the chemical formula of the electrolyte produced in the example?")
+      materials, _ = rag.query("what are the materials used in the example?")
       conductivity, _ = rag.query("what is the conductivity of the electrolyte?")
       content.append({"patent":f, "summary": summary, "chemical formula": formula, "starting materials": materials, "conductivity": conductivity})
   with open(FLAGS.output_json, 'w', encoding = 'utf-8') as f:
