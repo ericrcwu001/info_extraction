@@ -7,7 +7,7 @@ from tqdm import tqdm
 import json
 from langchain.document_loaders import UnstructuredPDFLoader, UnstructuredHTMLLoader, TextLoader
 from models import Llama2, Llama3, CodeLlama
-
+from summarize import summarize
 from rag import RAG
 
 FLAGS = flags.FLAGS
