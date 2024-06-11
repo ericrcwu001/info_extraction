@@ -115,4 +115,3 @@ The all-solid batteries of Preparation Example and Comparative Example were subj
 	Comparative Example 	208.7 	160.6 	77.0
 
 Although various exemplary embodiments of the present invention have been described with reference to the accompanying drawings, those skilled in the art will appreciate that the present invention may be embodied in other specific forms without changing the technical spirit or essential features. Thus, embodiments described above should be understood to be illustrative in every way and non-limiting.
-
