@@ -48,7 +48,7 @@ def main(unused_argv):
       print('2) RAG with the summarization')
       rag = RAG(tokenizer, llm, text, locally = FLAGS.locally)
       formula, _ = rag.query("what is the chemical formula of the electrolyte in the example?")
-      materials, _ = rag.query("what is the starting material in the example?")
+      materials, _ = rag.query("what are the starting materials used in the example?")
       conductivity, _ = rag.query("what is the conductivity of the electrolyte?")
       content.append({"patent":f, "summary": summary, "chemical formula": formula, "starting materials": materials, "conductivity": conductivity})
   with open(FLAGS.output_json, 'w', encoding = 'utf-8') as f:
