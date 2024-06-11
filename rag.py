@@ -2,7 +2,6 @@
 
 from os.path import splitext, join, exists
 from shutil import rmtree
-from langchain.document_loaders import UnstructuredPDFLoader, UnstructuredHTMLLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import Chroma
@@ -12,32 +11,19 @@ from models import Llama3
 from prompts import rag_template
 
 class RAG(object):
-  def __init__(self, file_path, db_dir = 'db', locally = False):
+  def __init__(self, tokenizer, llm, text, db_dir = 'db', locally = False):
     if exists(db_dir): rmtree(db_dir)
-    # load llama3
-    tokenizer, llm = Llama3(locally)
     # load pdf to vectordb
-    docs = list()
-    stem, ext = splitext(file_path)
-    if ext.lower() == '.pdf':
-      loader = UnstructuredPDFLoader(file_path, mode = "single", strategy = "fast")
-    elif ext.lower() == '.txt':
-      loader = TextLoader(file_path)
-    elif ext.lower() in ['.html', '.htm']:
-      loader = UnstructuredHTMLLoader(file_path)
-    else:
-      raise Exception('unknown file format!')
-    docs.extend(loader.load())
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 500, chunk_overlap = 150)
-    split_docs = text_splitter.split_documents(docs)
+    split_texts = text_splitter.split_text(text)
     embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
-    vectordb = Chroma.from_documents(
-        documents = split_docs,
+    vectordb = Chroma.from_texts(
+        texts = split_texts,
         embedding = embeddings,
         persist_directory = db_dir)
     vectordb.persist()
     # create chain
-    prompt = rag_template(tokenizer, False)
+    prompt = rag_template(tokenizer)
     self.chain = RetrievalQA.from_chain_type(llm, retriever = vectordb.as_retriever(), return_source_documents = True, chain_type_kwargs = {"prompt": prompt})
   def query(self, question):
     res = self.chain({'query': question})
