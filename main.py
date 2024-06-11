@@ -17,7 +17,7 @@ def add_options():
   flags.DEFINE_boolean('locally', default = False, help = 'whether run LLM locally')
   flags.DEFINE_string('output_json', default = 'output.json', help = 'path to output json')
   flags.DEFINE_enum('model', default = 'llama3', enum_values = {'llama2', 'llama3', 'codellama'}, help = 'model name')
-  flags.DEFINE_boolean('recursively', default = False, help = 'summary multiple chunks into one summary')
+  flags.DEFINE_boolean('recursively', default = True, help = 'summary multiple chunks into one summary')
   flags.DEFINE_string('instruction', default = 'Just focus on starting materials in the given examples, chemical formula of electrolyte and numerical data of conductivity', help = 'extra instruction')
 
 def main(unused_argv):
