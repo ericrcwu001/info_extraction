@@ -46,10 +46,11 @@ def main(unused_argv):
       summary = summarize(text, detail = 0.5, llm = llm, tokenizer = tokenizer, summarize_recursively = FLAGS.recursively, additional_instructions = FLAGS.instruction)
 
       print('2) RAG with the summarization')
-      rag = RAG(tokenizer, llm, summary, locally = FLAGS.locally)
-      formula, _ = rag.query("what is the chemical formula of the electrolyte produced in the example?")
-      materials, _ = rag.query("what are the materials used in the example?")
-      conductivity, _ = rag.query("what is the conductivity of the electrolyte?")
+      rag_long = RAG(tokenizer, llm, text, locally = FLAGS.locally, db_dir = "long")
+      rag_short = RAG(tokenizer, llm, summary, locally = FLAGS.locally, db_dir = "short")
+      formula, _ = rag_short.query("what is the chemical formula of the electrolyte produced in the example?")
+      materials, _ = rag_short.query("what are the materials used in the example?")
+      conductivity, _ = rag_long.query("what is the conductivity of the electrolyte?")
       content.append({"patent":f, "summary": summary, "chemical formula": formula, "starting materials": materials, "conductivity": conductivity})
   with open(FLAGS.output_json, 'w', encoding = 'utf-8') as f:
     f.write(json.dumps(content, indent = 2, ensure_ascii = False))
