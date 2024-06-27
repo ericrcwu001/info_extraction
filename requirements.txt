@@ -2,7 +2,10 @@ tqdm
 absl-py
 torch
 transformers
+langchain
 langchain-community
+langchain-openai
+langchain-huggingface
 gradio
 unstructured
 pdf2image
@@ -15,3 +18,5 @@ onnxruntime
 pikepdf
 sentence-transformers
 chromadb
+pillow_heif
+unstructured.pytesseract
