@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
 from os import walk
-from os.path import splitext, join, exists
+from os.path import splitext, join
 from absl import flags, app
 from tqdm import tqdm
 import json
 from langchain_community.document_loaders import UnstructuredPDFLoader, UnstructuredHTMLLoader, TextLoader
 from models import Llama2, Llama3, CodeLlama
 from summarize import summarize
-from rag import RAG
 
 FLAGS = flags.FLAGS
 

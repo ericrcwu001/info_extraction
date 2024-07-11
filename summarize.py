@@ -141,7 +141,8 @@ def summarize(text: str,
             response = response.replace('\n', '')
 
         # Assuming this function gets the completion and works as expected
-        accumulated_summaries.append(response)
+        if (response not in accumulated_summaries):
+            accumulated_summaries.append(response)
 
     # Compile final summary from partial summaries
     final_summary = '\n\n'.join(accumulated_summaries)

@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 
-from os.path import splitext, join, exists
+from os.path import exists
 from shutil import rmtree
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain_core.vectorstores import VectorStoreRetriever
 from langchain.chains import RetrievalQA
-from models import Llama3
 from prompts import rag_template
 
 
@@ -17,11 +15,10 @@ class RAG(object):
         # load pdf to vectordb
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=150)
         split_texts = text_splitter.split_text(text)
-        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L12-v2")
         vectordb = Chroma.from_texts(
             texts=split_texts,
-            embedding=embeddings,
-            persist_directory=db_dir)
+            embedding=embeddings)
         vectordb.persist()
         # create chain
         prompt = rag_template(tokenizer)

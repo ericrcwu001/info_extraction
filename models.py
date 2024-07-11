@@ -41,7 +41,7 @@ def ChatGLM3(locally=False):
 
 
 def Llama2(locally=False):
-    login('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')
+    login(token='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')
     tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
     if locally:
         llm = HuggingFacePipeline.from_model_id(
@@ -94,12 +94,13 @@ def Llama3(locally=False):
         llm = HuggingFaceEndpoint(
             endpoint_url="meta-llama/Meta-Llama-3-8B-Instruct",
             task="text-generation",
-            max_new_tokens=512,
+            max_length=16384,
+            max_new_tokens=1024,
             do_sample=False,
             temperature=0.6,
             top_p=0.9,
-            # eos_token_id=[tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")],
-            # cache=True
+            eos_token_id=[tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")],
+            cache=True
         )
     return tokenizer, llm
 
